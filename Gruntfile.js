@@ -42,7 +42,7 @@ module.exports = function (grunt) {
 			compile: {
 				files: [{
 					cwd: 'app/styles',
-					src: 'main.styl',
+					src: 'common.styl',
 					dest: 'dist/assets/<%= pkg.version %>/styles',
 					expand: true,
 					ext: '.css'
@@ -70,8 +70,8 @@ module.exports = function (grunt) {
 		cmq: {
 			dist: {
 				files: {
-					'dist/assets/<%= pkg.version %>/styles/main.css': [
-						'dist/assets/<%= pkg.version %>/styles/main.css'
+					'dist/assets/<%= pkg.version %>/styles/common.css': [
+						'dist/assets/<%= pkg.version %>/styles/common.css'
 					]
 				}
 			}
@@ -100,15 +100,14 @@ module.exports = function (grunt) {
 							copyright: '<%= pkg.copyright %>',
 							description: '<%= pkg.description %>',
 							keywords: '<%= pkg.keywords.join(\', \') %>',
-							replyTo: '<%= pkg.bugs.email %>',
 							title: '<%= pkg.title %>',
-							version: '<%= pkg.version %>',
+							version: '<%= pkg.version %>'
 						}
 					}
 				},
 				files: [{
-					cwd: 'app/templates',
-					src: ['**/*.jade', '!{helpers,layouts,partials}/**/*'],
+					cwd: 'app/templates/pages',
+					src: ['**/*.jade'],
 					dest: 'dist',
 					expand: true,
 					ext: '.html'
@@ -146,9 +145,7 @@ module.exports = function (grunt) {
 			},
 			all: [
 				'app/scripts/**/*.js',
-				'!app/scripts/libs/**/*',
-				'!app/scripts/browsehappy/**/*',
-				'app/scripts/browsehappy/browsehappy.js'
+				'!app/scripts/libs/**/*'
 			],
 			configFiles: [
 				'.csscomb.json',
@@ -171,7 +168,7 @@ module.exports = function (grunt) {
 				files: [{
 					expand: true,
 					cwd: 'app/scripts',
-					src: ['**/*.js', '!browsehappy/**/*'],
+					src: ['**/*.js'],
 					dest: 'dist/assets/<%= pkg.version %>/scripts',
 					filter: 'isFile'
 				}]
@@ -185,67 +182,12 @@ module.exports = function (grunt) {
 					filter: 'isFile'
 				}]
 			},
-			favicon: {
+			favicons: {
 				files: [{
 					expand: true,
 					cwd: 'app',
-					src: 'favicon.ico',
+					src: '*.ico',
 					dest: 'dist',
-					filter: 'isFile'
-				}]
-			}
-		},
-
-		uglify: {
-			options: {
-				report: 'min',
-				mangle: {
-					except: ['jQuery']
-				}
-			},
-			browsehappy: {
-				files: {
-					'dist/assets/<%= pkg.version %>/scripts/libs/browsehappy.min.js': [
-						'app/scripts/browsehappy/detect.min.js',
-						'app/scripts/browsehappy/browsehappy.js'
-					]
-				}
-			}
-		},
-
-		replace: {
-			browsehappy: {
-				options: {
-					patterns: [{
-						json: {
-							android: '<%= pkg.browsers.android %>',
-							chrome: '<%= pkg.browsers.chrome %>',
-							firefox: '<%= pkg.browsers.firefox %>',
-							ie: '<%= pkg.browsers.ie %>',
-							ios: '<%= pkg.browsers.ios %>',
-							opera: '<%= pkg.browsers.opera %>',
-							safari: '<%= pkg.browsers.safari %>'
-						}
-					}]
-				},
-				files: [{
-					src: 'dist/assets/<%= pkg.version %>/scripts/libs/browsehappy.min.js',
-					dest: 'dist/assets/<%= pkg.version %>/scripts/libs/browsehappy.min.js'
-				}]
-			},
-			dist: {
-				options: {
-					patterns: [{
-						json: {
-							assets: 'assets/<%= pkg.version %>/'
-						}
-					}]
-				},
-				files: [{
-					expand: true,
-					cwd: 'dist/assets/<%= pkg.version %>/scripts',
-					src: ['main.js'],
-					dest: 'dist/assets/<%= pkg.version %>/scripts',
 					filter: 'isFile'
 				}]
 			}
@@ -255,7 +197,7 @@ module.exports = function (grunt) {
 			dist: {
 				options: {
 					base: 'dist',
-					//livereload: true,
+					// livereload: true,
 					port: 3000
 				}
 			}
@@ -263,7 +205,7 @@ module.exports = function (grunt) {
 
 		watch: {
 			options: {
-				dateFormat: function(ms) {
+				dateFormat: function (ms) {
 					var now = new Date(),
 						time = now.toLocaleTimeString(),
 						day = now.getDate(),
@@ -286,10 +228,10 @@ module.exports = function (grunt) {
 				},
 			},
 			configFiles: {
-				files: ['.csscomb.json', 'Gruntfile.js', 'package.json'],
 				options: {
 					reload: true
 				},
+				files: ['.csscomb.json', 'Gruntfile.js', 'package.json'],
 				tasks: ['newer:jshint:configFiles']
 			},
 			livereload: {
@@ -311,24 +253,20 @@ module.exports = function (grunt) {
 				tasks: ['stylus', 'autoprefixer', 'cmq', 'csscomb']
 			},
 			jade: {
-				files: ['app/templates/**/*.jade', '!app/templates/{helpers,layouts,partials}/**/*'],
+				files: ['app/templates/pages/**/*.jade'],
 				tasks: ['newer:jade', 'newer:prettify']
 			},
 			jadePartials: {
-				files: 'app/templates/{helpers,layouts,partials}/**/*.jade',
+				files: ['app/templates/**/*.jade', '!app/templates/pages/**/*.jade'],
 				tasks: ['jade', 'newer:prettify']
 			},
 			jshint: {
-				files: ['app/scripts/**/*.js', '!app/scripts/libs/**/*', '!app/scripts/browsehappy/**/*', 'app/scripts/browsehappy/browsehappy.js'],
+				files: ['app/scripts/**/*.js', '!app/scripts/libs/**/*'],
 				tasks: ['newer:jshint:all']
 			},
 			scripts: {
-				files: ['app/scripts/**/*.js', '!app/scripts/browsehappy/**/*', '!app/scripts/libs/**/*'],
-				tasks: ['newer:copy:scripts', 'newer:replace:dist']
-			},
-			browsehappy: {
-				files: ['app/scripts/browsehappy/**/*.js'],
-				tasks: ['newer:uglify', 'newer:replace:browsehappy']
+				files: ['app/scripts/**/*.js', '!app/scripts/libs/**/*'],
+				tasks: ['newer:copy:scripts']
 			},
 			copyFonts: {
 				files: ['app/fonts/**/*'],
@@ -338,8 +276,8 @@ module.exports = function (grunt) {
 				files: ['app/images/svg/**/*.svg'],
 				tasks: ['newer:copy:svg']
 			},
-			copyFavicon: {
-				files: ['app/favicon.ico'],
+			copyFavicons: {
+				files: ['app/*.ico'],
 				tasks: ['copy:favicon']
 			}
 		},
@@ -365,7 +303,7 @@ module.exports = function (grunt) {
 	require('load-grunt-tasks')(grunt);
 
 	grunt.registerTask('build', [
-		'clean:dist',
+		'clean',
 		'sprite',
 		'imagemin',
 		'stylus',
@@ -375,9 +313,7 @@ module.exports = function (grunt) {
 		'jade',
 		'prettify',
 		'jshint',
-		'copy',
-		'uglify',
-		'replace'
+		'copy'
 	]);
 
 	grunt.registerTask('serve', [
