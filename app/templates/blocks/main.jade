@@ -27,6 +27,8 @@ h2.h2 СТРУКТУРА ФАЙЛОВ
 			{
 				folder: 'images'
 			}, {
+				folder: 'resources'
+			}, {
 				folder: 'scripts',
 				content: [
 					{
@@ -128,31 +130,28 @@ h2.h2 СТРУКТУРА ФАЙЛОВ
 		+tree([
 			{
 				folder: 'assets',
-				content: [{
-					folder: page.version,
-					content: [
-						{ folder: 'images' },
-						{
-							folder: 'scripts',
-							content: [
-								{
-									folder: 'libs',
-									content: [
-										{ file: 'jquery.min.js' }
-									]
-								},
-								{ file: 'common.js' },
-								{ file: 'debug.js' }
-							]
-						},
-						{
-							folder: 'styles',
-							content: [
-								{ file: 'common.css' }
-							]
-						}
-					]
-				}]
+				content: [
+					{ folder: 'images' },
+					{
+						folder: 'scripts',
+						content: [
+							{
+								folder: 'libs',
+								content: [
+									{ file: 'jquery.min.js' }
+								]
+							},
+							{ file: 'common.js' },
+							{ file: 'debug.js' }
+						]
+					},
+					{
+						folder: 'styles',
+						content: [
+							{ file: 'common.css' }
+						]
+					}
+				]
 			},
 			{ file: 'index.html' }
 		])

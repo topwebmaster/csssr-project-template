@@ -30,7 +30,7 @@ module.exports = function (grunt) {
 					expand: true,
 					cwd: 'app/images',
 					src: ['**/*.{png,jpg,gif}', '!sprite/**/*'],
-					dest: 'dist/assets/<%= pkg.version %>/images'
+					dest: 'dist/assets/images'
 				}]
 			}
 		},
@@ -43,7 +43,7 @@ module.exports = function (grunt) {
 				files: [{
 					cwd: 'app/styles',
 					src: 'common.styl',
-					dest: 'dist/assets/<%= pkg.version %>/styles',
+					dest: 'dist/assets/styles',
 					expand: true,
 					ext: '.css'
 				}]
@@ -63,15 +63,15 @@ module.exports = function (grunt) {
 				]
 			},
 			dist: {
-				src: ['dist/assets/<%= pkg.version %>/styles/**/*.css']
+				src: ['dist/assets/styles/**/*.css']
 			}
 		},
 
 		cmq: {
 			dist: {
 				files: {
-					'dist/assets/<%= pkg.version %>/styles/common.css': [
-						'dist/assets/<%= pkg.version %>/styles/common.css'
+					'dist/assets/styles/common.css': [
+						'dist/assets/styles/common.css'
 					]
 				}
 			}
@@ -84,9 +84,9 @@ module.exports = function (grunt) {
 				},
 				files: [{
 					expand: true,
-					cwd: 'dist/assets/<%= pkg.version %>/styles',
+					cwd: 'dist/assets/styles',
 					src: '**/*.css',
-					dest: 'dist/assets/<%= pkg.version %>/styles'
+					dest: 'dist/assets/styles'
 				}]
 			}
 		},
@@ -96,12 +96,10 @@ module.exports = function (grunt) {
 				options: {
 					data: {
 						page: {
-							assets: 'assets/<%= pkg.version %>/',
 							copyright: '<%= pkg.copyright %>',
 							description: '<%= pkg.description %>',
 							keywords: '<%= pkg.keywords.join(\', \') %>',
-							title: '<%= pkg.title %>',
-							version: '<%= pkg.version %>'
+							title: '<%= pkg.title %>'
 						}
 					}
 				},
@@ -155,38 +153,20 @@ module.exports = function (grunt) {
 		},
 
 		copy: {
-			fonts: {
-				files: [{
-					expand: true,
-					cwd: 'app/fonts',
-					src: '*',
-					dest: 'dist/assets/<%= pkg.version %>/fonts',
-					filter: 'isFile'
-				}]
-			},
 			scripts: {
 				files: [{
 					expand: true,
 					cwd: 'app/scripts',
 					src: ['**/*.js'],
-					dest: 'dist/assets/<%= pkg.version %>/scripts',
+					dest: 'dist/assets/scripts',
 					filter: 'isFile'
 				}]
 			},
-			svg: {
+			resources: {
 				files: [{
 					expand: true,
-					cwd: 'app/images/svg',
-					src: '**/*.svg',
-					dest: 'dist/assets/<%= pkg.version %>/images/svg',
-					filter: 'isFile'
-				}]
-			},
-			favicons: {
-				files: [{
-					expand: true,
-					cwd: 'app',
-					src: '*.ico',
+					cwd: 'app/resources',
+					src: '**/*',
 					dest: 'dist',
 					filter: 'isFile'
 				}]
@@ -268,17 +248,9 @@ module.exports = function (grunt) {
 				files: ['app/scripts/**/*.js', '!app/scripts/libs/**/*'],
 				tasks: ['newer:copy:scripts']
 			},
-			copyFonts: {
-				files: ['app/fonts/**/*'],
-				tasks: ['newer:copy:fonts']
-			},
-			copySvg: {
-				files: ['app/images/svg/**/*.svg'],
-				tasks: ['newer:copy:svg']
-			},
-			copyFavicons: {
-				files: ['app/*.ico'],
-				tasks: ['copy:favicon']
+			copyResources: {
+				files: ['app/resources/**/*'],
+				tasks: ['newer:copy:resources']
 			}
 		},
 
