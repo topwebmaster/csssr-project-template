@@ -58,8 +58,9 @@ html {
 
 body {
 	font-size: 100%;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
 	line-height: 1;
-	-webkit-font-smoothing: antialiased !important;
 }
 
 a {
