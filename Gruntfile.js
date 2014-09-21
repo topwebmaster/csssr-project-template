@@ -173,12 +173,17 @@ module.exports = function (grunt) {
 			}
 		},
 
-		connect: {
+		browserSync: {
 			dist: {
+				bsFiles: {
+					src: 'dist/**/*'
+				},
 				options: {
-					base: 'dist',
-					// livereload: true,
-					port: 3000
+					open: false,
+					server: {
+						baseDir: 'dist'
+					},
+					watchTask: true
 				}
 			}
 		},
@@ -288,13 +293,9 @@ module.exports = function (grunt) {
 		'copy'
 	]);
 
-	grunt.registerTask('serve', [
-		'connect:dist:keepalive'
-	]);
-
 	grunt.registerTask('default', [
 		'build',
-		'connect',
+		'browserSync',
 		'watch'
 	]);
 
