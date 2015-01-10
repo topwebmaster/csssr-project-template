@@ -1,6 +1,6 @@
 {
   "name": "csssr-project-template",
-  "version": "0.7.10",
+  "version": "0.7.11",
   "title": "CSSSR Project Template",
   "description": "A template for a quick start.",
   "keywords": [
@@ -17,8 +17,8 @@
     "url": "https://github.com/CSSSR/csssr-project-template.git"
   },
   "author": {
-    "name": "GC92",
-    "url": "https://github.com/GC92"
+    "name": "felixexter",
+    "url": "https://github.com/felixexter"
   },
   "copyright": "©CSSSR",
   "bugs": {

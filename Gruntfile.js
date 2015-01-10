@@ -132,14 +132,19 @@ module.exports = function (grunt) {
 
 		jshint: {
 			options: {
+				boss: true,
 				curly: true,
 				eqeqeq: true,
 				eqnull: true,
-				browser: true,
-				force: true,
-				globals: {
-					jQuery: true
-				}
+				expr: true,
+				immed: true,
+				noarg: true,
+				onevar: true,
+				quotmark: 'one',
+				smarttabs: true,
+				trailing: true,
+				undef: false,
+				unused: true
 			},
 			all: [
 				'app/scripts/**/*.js',
@@ -180,6 +185,7 @@ module.exports = function (grunt) {
 				},
 				options: {
 					open: false,
+					port: grunt.cli.options.port || 3000,
 					server: {
 						baseDir: 'dist'
 					},

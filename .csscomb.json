@@ -152,6 +152,7 @@
 		"filter:progid:DXImageTransform.Microsoft.Alpha(Opacity",
 		"-ms-filter:\\'progid:DXImageTransform.Microsoft.Alpha",
 		"-ms-interpolation-mode",
+		"-webkit-focus-ring-color",
 		"-webkit-tap-highlight-color",
 		"background",
 		"filter:progid:DXImageTransform.Microsoft.AlphaImageLoader",
