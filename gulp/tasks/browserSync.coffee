@@ -5,7 +5,7 @@ gutil       = require 'gulp-util'
 gulp.task 'browserSync', ->
 	browserSync
 		files: ['dist/**/*']
-		open: false
+		open: !!gutil.env.open
 		port: gutil.env.port || 3001
 		server:
 			baseDir: [
@@ -17,4 +17,5 @@ gulp.task 'browserSync', ->
 				'/assets/images': 'app/images'
 				'/assets/images/svg': 'app/resources/assets/images/svg'
 				'/assets/scripts': 'app/scripts'
+				'/assets/scripts/libs': 'components'
 			directory: false
